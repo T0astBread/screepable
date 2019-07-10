@@ -9,11 +9,13 @@ const roles = {
 }
 const decideRole = require("decide-role")
 const restock = require("restock")
+const driveTowers = require("drive-towers")
 
 
 module.exports.loop = () => {
     const spawn = Game.spawns[SPAWN_NAME]
     
+    driveTowers()
     restock()
     
     for(const creepName in Game.creeps) {
