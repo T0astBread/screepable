@@ -1,7 +1,5 @@
 const {
-    SPAWN_NAME,
-    MAX_CREEP_COUNT,
-    GENERAL_PURPOSE_CREEP_CAPABILITIES
+    SPAWN_NAME
 } = require("const")
 const roles = {
     harvester: require("role.harvester"),
@@ -10,16 +8,13 @@ const roles = {
     "self-repair": require("role.self-repair")
 }
 const decideRole = require("decide-role")
+const restock = require("restock")
 
 
 module.exports.loop = () => {
     const spawn = Game.spawns[SPAWN_NAME]
     
-    const creepCount = Object.keys(Game.creeps).length
-    if(creepCount < MAX_CREEP_COUNT) {
-        if(spawn.spawnCreep(GENERAL_PURPOSE_CREEP_CAPABILITIES, "GP_" + creepCount) !== ERR_NOT_ENOUGH_ENERGY)
-            console.log("Spawning new general purpose creep")
-    }
+    restock()
     
     for(const creepName in Game.creeps) {
         const creep = Game.creeps[creepName]
