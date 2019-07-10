@@ -1,4 +1,5 @@
 const { SPAWN_NAME } = require("const")
+const { getClosestEnergyDeposit } = require("utils")
 
 module.exports = {
     /**
@@ -14,9 +15,9 @@ module.exports = {
             }
         }
         else {
-            const spawn = Game.spawns[SPAWN_NAME]
-            if(creep.withdraw(spawn, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-                creep.moveTo(spawn)
+            const targetDeposit = getClosestEnergyDeposit(creep)
+            if(targetDeposit != null && creep.withdraw(targetDeposit, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+                creep.moveTo(targetDeposit)
             }
         }
     }

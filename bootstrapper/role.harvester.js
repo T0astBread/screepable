@@ -8,7 +8,7 @@ module.exports = {
         // creep.say("Harvesting")  // Commented out because it was annoying to have almost every creep say "Harvesting"
         const spawn = Game.spawns[SPAWN_NAME]
 
-        
+
         const chooseRandomSource = () => {
             const sources = creep.room.find(FIND_SOURCES)
             creep.memory.harvestSource = sources[Math.floor(Math.random() * sources.length)].id
@@ -23,14 +23,24 @@ module.exports = {
 
         if(targetSource.energy === 0)
             chooseRandomSource()
-        
+
         if(creep.carry.energy < creep.carryCapacity) {
             if(creep.harvest(targetSource) === ERR_NOT_IN_RANGE)
                 if(creep.moveTo(targetSource) === ERR_NO_PATH)
                     chooseRandomSource()
         }
-        else if(creep.transfer(spawn, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(spawn)
+        else {
+            var transferTargets = creep.room.find(FIND_STRUCTURES, {
+                filter: struct =>
+                    (struct.structureType == STRUCTURE_EXTENSION || struct.structureType == STRUCTURE_SPAWN) &&
+                    struct.energy < struct.energyCapacity
+            })
+            if(transferTargets != null && transferTargets.length > 0) {
+                const transferTarget = transferTargets[0]
+                if(creep.transfer(transferTarget, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+                    creep.moveTo(transferTarget)
+                }
+            }
         }
     }
 }
