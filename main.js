@@ -5,7 +5,8 @@ const roles = {
     harvester: require("role.harvester"),
     builder: require("role.builder"),
     upgrader: require("role.upgrader"),
-    "self-repair": require("role.self-repair")
+    "self-repair": require("role.self-repair"),
+    refueler: require("role.refueler")
 }
 const decideRole = require("decide-role")
 const restock = require("restock")

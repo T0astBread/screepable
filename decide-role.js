@@ -5,7 +5,8 @@ const {
     ROLE_HARVESTER,
     ROLE_BUILDER,
     ROLE_UPGRADER,
-    ROLE_SELF_REPAIR
+    ROLE_SELF_REPAIR,
+    ROLE_REFUELER
 } = require("const")
 
 /**
@@ -46,6 +47,17 @@ module.exports = creep => {
         }
     }
     
+    
+    const towersWithLowEnergy = spawn.room.find(FIND_MY_STRUCTURES, {
+        filter: struct => struct instanceof StructureTower && struct.energy < struct.energyCapacity / 2
+    })
+    if(towersWithLowEnergy.length > 0) {
+        const refuelerCount = findCreepsWithRole(ROLE_REFUELER)
+        if(refuelerCount < towersWithLowEnergy.length) {
+            assignRole(ROLE_REFUELER, "There are towers with low energy")
+            return
+        }
+    }
     
     const shouldUpgrade = Memory.roleBalancing.controllerUpgradeIsWanted || spawn.room.controller.ticksToDowngrade < 200
     const upgraderCount = findCreepsWithRole(ROLE_UPGRADER).length
