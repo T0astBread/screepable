@@ -5,7 +5,7 @@ module.exports = {
      * @param {Creep} creep
      **/
     run: creep => {
-        creep.say("Harvesting")
+        // creep.say("Harvesting")  // Commented out because it was annoying to have almost every creep say "Harvesting"
         const spawn = Game.spawns[SPAWN_NAME]
         
         if(creep.carry.energy < creep.carryCapacity) {
