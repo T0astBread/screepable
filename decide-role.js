@@ -18,6 +18,7 @@ module.exports = creep => {
     const SELF_RENEW_THRESHOLD = 300
     
     const spawn = Game.spawns[SPAWN_NAME]
+    const allCreeps = spawn.room.find(FIND_MY_CREEPS)
     
     const findCreepsWithRole = role => spawn.room.find(FIND_MY_CREEPS, {
         filter: c => c.memory.role === role && c.id !== creep.id && !c.spawning
@@ -58,7 +59,7 @@ module.exports = creep => {
     const constructionSiteCount = Object.keys(Game.constructionSites).length
     if(constructionSiteCount > 0) {
         const builderCount = findCreepsWithRole(ROLE_BUILDER).length
-        if(builderCount < constructionSiteCount * 2) {
+        if(builderCount < constructionSiteCount * 2 && builderCount < allCreeps.length / 2) {
             assignRole(ROLE_BUILDER, "Construction sites but not enough builders")
             return
         }
