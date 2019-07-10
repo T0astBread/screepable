@@ -62,7 +62,7 @@ module.exports = creep => {
     
     
     const structsWithLowHits = spawn.room.find(FIND_STRUCTURES, {
-        filter: struct => struct.hits < struct.hitsMax / 2
+        filter: struct => struct.hits < Math.min(struct.hitsMax / 2, 1000)
     })
     if(structsWithLowHits.length > 0) {
         const repairerCount = findCreepsWithRole(ROLE_REPAIRER)
