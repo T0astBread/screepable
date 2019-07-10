@@ -9,5 +9,7 @@ module.exports = {
     ROLE_HARVESTER: "harvester",
     ROLE_BUILDER: "builder",
     ROLE_UPGRADER: "upgrader",
-    ROLE_SELF_REPAIR: "self-repair"
+    ROLE_SELF_REPAIR: "self-repair",
+    
+    MAX_UPGRADER_COUNT: 3
 }

@@ -1,5 +1,6 @@
 const {
     SPAWN_NAME,
+    MAX_UPGRADER_COUNT,
     
     ROLE_HARVESTER,
     ROLE_BUILDER,
@@ -44,8 +45,9 @@ module.exports = creep => {
     }
     
     
-    if(Memory.roleBalancing.controllerUpgradeIsWanted || spawn.room.controller.ticksToDowngrade < 200) {
-        const upgraderCount = findCreepsWithRole(ROLE_UPGRADER).length
+    const shouldUpgrade = Memory.roleBalancing.controllerUpgradeIsWanted || spawn.room.controller.ticksToDowngrade < 200
+    const upgraderCount = findCreepsWithRole(ROLE_UPGRADER).length
+    if(shouldUpgrade) {
         if(upgraderCount === 0) {
             assignRole(ROLE_UPGRADER, "Controller downgrade eminent or upgrade wanted")
             return
@@ -62,6 +64,11 @@ module.exports = creep => {
         }
     }
     
+    
+    if(shouldUpgrade && upgraderCount < MAX_UPGRADER_COUNT) {
+        assignRole(ROLE_UPGRADER, "No other role assigned and could use more upgraders")
+        return
+    }
     
     assignRole(ROLE_HARVESTER, "No other role assigned", true)
 }
