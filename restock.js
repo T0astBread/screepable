@@ -3,7 +3,8 @@ const {
     
     MAX_CREEP_COUNT,
     ENERGY_RESERVE,
-    CREEP_COST
+    CREEP_COST,
+    GENERAL_PURPOSE_CREEP_CAPABILITIES
 } = require("const")
 
 /**

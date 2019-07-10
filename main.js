@@ -19,6 +19,10 @@ module.exports.loop = () => {
     for(const creepName in Game.creeps) {
         const creep = Game.creeps[creepName]
         decideRole(creep)
+    }
+    
+    for(const creepName in Game.creeps) {
+        const creep = Game.creeps[creepName]
         executeCreepRole(creep)
     }
 }
