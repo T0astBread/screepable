@@ -6,7 +6,8 @@ const {
     ROLE_BUILDER,
     ROLE_UPGRADER,
     ROLE_SELF_REPAIR,
-    ROLE_REFUELER
+    ROLE_REFUELER,
+    ROLE_REPAIRER
 } = require("const")
 
 /**
@@ -58,6 +59,19 @@ module.exports = creep => {
             return
         }
     }
+    
+    
+    const structsWithLowHits = spawn.room.find(FIND_STRUCTURES, {
+        filter: struct => struct.hits < struct.hitsMax / 2
+    })
+    if(structsWithLowHits.length > 0) {
+        const repairerCount = findCreepsWithRole(ROLE_REPAIRER)
+        if(repairerCount < structsWithLowHits.length) {
+            assignRole(ROLE_REPAIRER, "There are structures with low hit points")
+            return
+        }
+    }
+    
     
     const shouldUpgrade = Memory.roleBalancing.controllerUpgradeIsWanted || spawn.room.controller.ticksToDowngrade < 200
     const upgraderCount = findCreepsWithRole(ROLE_UPGRADER).length

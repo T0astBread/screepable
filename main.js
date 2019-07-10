@@ -6,7 +6,8 @@ const roles = {
     builder: require("role.builder"),
     upgrader: require("role.upgrader"),
     "self-repair": require("role.self-repair"),
-    refueler: require("role.refueler")
+    refueler: require("role.refueler"),
+    repairer: require("role.repairer")
 }
 const decideRole = require("decide-role")
 const restock = require("restock")
