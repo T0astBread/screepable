@@ -36,6 +36,7 @@ module.exports = creep => {
         return
     }
     
+    
     if(spawn.energy === 0) {
         const harvesterCount = findCreepsWithRole(ROLE_HARVESTER).length
         
