@@ -1,6 +1,5 @@
 const {
     SPAWN_NAME,
-    MAX_UPGRADER_COUNT,
     
     ROLE_HARVESTER,
     ROLE_BUILDER,
@@ -93,7 +92,7 @@ module.exports = creep => {
     }
     
     
-    if(shouldUpgrade && upgraderCount < MAX_UPGRADER_COUNT) {
+    if(shouldUpgrade && upgraderCount < findCreepsWithRole(ROLE_HARVESTER).length - 1) {
         assignRole(ROLE_UPGRADER, "No other role assigned and could use more upgraders")
         return
     }

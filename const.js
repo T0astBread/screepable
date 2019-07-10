@@ -11,7 +11,5 @@ module.exports = {
     ROLE_UPGRADER: "upgrader",
     ROLE_SELF_REPAIR: "self-repair",
     ROLE_REFUELER: "refueler",
-    ROLE_REPAIRER: "repairer",
-    
-    MAX_UPGRADER_COUNT: 3
+    ROLE_REPAIRER: "repairer"
 }
