@@ -3,7 +3,8 @@ const {
     
     ROLE_HARVESTER,
     ROLE_BUILDER,
-    ROLE_UPGRADER
+    ROLE_UPGRADER,
+    ROLE_SELF_REPAIR
 } = require("const")
 
 /**
@@ -13,17 +14,25 @@ module.exports = creep => {
     if(creep.spawning) return
     
     
+    const SELF_RENEW_THRESHOLD = 300
+    
     const spawn = Game.spawns[SPAWN_NAME]
     
     const findCreepsWithRole = role => spawn.room.find(FIND_MY_CREEPS, {
         filter: c => c.memory.role === role && c.id !== creep.id && !c.spawning
     })
     
-    const assignRole = (role, reason) => {
+    const assignRole = (role, reason, silent = false) => {
         creep.memory.role = role
-        console.log("Assigned role " + role + " to " + creep.name + "; Reason: " + reason)
+        if(!silent)
+            console.log("Assigned role " + role + " to " + creep.name + "; Reason: " + reason)
     }
     
+    
+    if(creep.ticksToLive < SELF_RENEW_THRESHOLD) {
+        assignRole(ROLE_SELF_REPAIR, "Creep TTL < " + SELF_RENEW_THRESHOLD)
+        return
+    }
     
     if(spawn.energy === 0) {
         const harvesterCount = findCreepsWithRole(ROLE_HARVESTER).length
@@ -54,7 +63,7 @@ module.exports = creep => {
     }
     
     
-    assignRole(ROLE_HARVESTER, "No other role assigned")
+    assignRole(ROLE_HARVESTER, "No other role assigned", true)
 }
 
 
